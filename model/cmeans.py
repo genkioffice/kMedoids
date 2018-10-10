@@ -67,7 +67,7 @@ class cMeans(object):
     # 引き数は計算前のmatrix
     def dist(self,y,v):
         # return norm
-        return pdist([y,v],'minkowski', 2) 
+        return pdist([y,v],'minkowski', 1) # 1: Manhattan distance, 2: Euclidian distance
     
 
     def estimate(self):
