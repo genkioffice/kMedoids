@@ -67,7 +67,8 @@ class cMeans(object):
     # 引き数は計算前のmatrix
     def dist(self,y,v):
         # return norm
-        return pdist([y,v],'minkowski', 2) 
+#         return pdist([y,v],'minkowski', 2)
+        return pdist([y,v],'minkowski', 1)
     
 
     def estimate(self):
@@ -75,6 +76,21 @@ class cMeans(object):
         diff_U = diff_U.sum()
         self.diff_U = diff_U
         return None
+    
+    def new_member(self,new_array):
+        ar_result = []
+        for i in range(self.numC):
+            sum_tmp_0 = []
+            for j in range(self.numC):
+                under = self.dist(new_array,self.centers[:,j]) #d_jk
+                upper = self.dist(new_array,self.centers[:,i]) #d_ik... j_for文内で定数
+                tmp_0 = (upper/under) ** (2/(self.m-1))
+                sum_tmp_0.append(tmp_0)
+            result = (sum(sum_tmp_0)) ** (-1)
+            ar_result.append(result)
+        ar_result = np.array(ar_result)
+        return ar_result
+    
     
     def fit(self):
         i= 0
