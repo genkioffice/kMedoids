@@ -90,6 +90,15 @@ class cMeans(object):
         ar_result = np.array(ar_result)
         return ar_result
     
+
+    def recommend(self,new_array):
+        ar_result = self.new_member(new_array)
+        multiplied = self.new_centers.T * np.array(ar_result)
+        result =multiplied.sum(axis=0)
+        index = np.array(range(0,len(result)))
+        df_result = pd.DataFrame({"id":index,"rank":np.argsort(-result),"value":result}).sort_values("rank")
+        return df_result
+    
     
     def fit(self):
         i= 0
